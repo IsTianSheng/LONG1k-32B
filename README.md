@@ -14,16 +14,16 @@
 
   Among the work of the thesis, we firstly did two sets of experiments, namely, conceptual synthetic long problems with conceptual synthetic difficult problems, and synthetic long problems with original difficult problems. The related results are shown in the following figure. It turns out that the models perform similarly in mathematical reasoning when the training token lengths are similar. We make a conclusion that the key factor affecting the model's reasoning effectiveness is not the difficulty.
 
-![img_3.jpg](img_2.jpg)
+![img_3.png](img_2.png)
 
 
   Therefore, we shifted our focus from the difficulty of mathematical problems to the length of mathematical problems. We made the assumption that length is the key factor in constructing inference models. To this end, we explored the effect of different tokens lengths on the reasoning ability of the model at the same difficulty level. Firstly, we classify the token length into 4 levels, whose lengths are 1.5k,3k,6k,12k. Then, we set the number of questions to 500, and conduct experimental validation on Qwen2.5-32B model. The results are shown below. The data show that on the math500 dataset, the performance is close to linearly increasing as the length increases.
 
-![img_3.jpg](img_1.jpg)
+![img_3.png](img_1.png)
 
   In addition, we compared the reasoning processes of two models trained with reasoning lengths of 1.5k and 12k, respectively, on the MATH500 test set, including both successful and failed reasoning attempts. Our analysis included statistical comparisons of the average reasoning token length and the top 10 most frequently used words during reasoning. The goal was to understand why the model trained with a reasoning length of 12k achieved an accuracy improvement of over 5%.
 
-![img_33.jpg](img_33.jpg)
+![img_33.png](img_33.png)
 
 
 
