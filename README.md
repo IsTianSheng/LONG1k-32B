@@ -14,22 +14,16 @@
 
   Among the work of the thesis, we firstly did two sets of experiments, namely, conceptual synthetic long problems with conceptual synthetic difficult problems, and synthetic long problems with original difficult problems. The related results are shown in the following figure. It turns out that the models perform similarly in mathematical reasoning when the training token lengths are similar. We make a conclusion that the key factor affecting the model's reasoning effectiveness is not the difficulty.
 
-![img_3.png](fig1.png)
+![img_3.jpg](img_2.jpg)
 
 
   Therefore, we shifted our focus from the difficulty of mathematical problems to the length of mathematical problems. We made the assumption that length is the key factor in constructing inference models. To this end, we explored the effect of different tokens lengths on the reasoning ability of the model at the same difficulty level. Firstly, we classify the token length into 4 levels, whose lengths are 1.5k,3k,6k,12k. Then, we set the number of questions to 500, and conduct experimental validation on Qwen2.5-32B model. The results are shown below. The data show that on the math500 dataset, the performance is close to linearly increasing as the length increases.
 
-![img_2.png](fig2.png)
+![img_3.jpg](img_1.jpg)
 
   In addition, we compared the reasoning processes of two models trained with reasoning lengths of 1.5k and 12k, respectively, on the MATH500 test set, including both successful and failed reasoning attempts. Our analysis included statistical comparisons of the average reasoning token length and the top 10 most frequently used words during reasoning. The goal was to understand why the model trained with a reasoning length of 12k achieved an accuracy improvement of over 5%.
 
-| Dataset Size | Correct/Wrong | Average Tokens | Top 10 Frequently Occurring Words                                                                 |
-|--------------|---------------|----------------|------------------------------------------------------------------------------------------------|
-| 1.5k         | Correct       | 2147.65        | the(5.30%) is(3.24%) so(1.98%) of(1.45%) to(1.44%) and(1.25%) that(1.17%) let(1.08%) **wait(1.07%)** **but(0.91%)** |
-| 12k          | Correct       | 4716.27        | the(4.92%) is(3.04%) so(1.83%) to(1.41%) of(1.25%) and(1.19%) **but(1.19%)** let(0.93%) that(0.90%) **wait(0.81%)** |
-| 1.5k         | Wrong         | 8247.21        | **but(5.05%)** the(5.00%) **wait(3.78%)** is(3.24%) of(1.29%) so(1.26%) therefore(1.16%) to(1.08%) and(1.01%) that(0.70%) |
-| 12k          | Wrong         | 15694.54       | the(5.12%) is(2.85%) to(1.64%) and(1.42%) **but(1.27%)** of(1.20%) so(1.08%) **wait(0.80%)** that(0.80%) in(0.75%) |
-
+![img_33.jpg](img_33.jpg)
 
 
 
@@ -39,14 +33,7 @@
 
 # Evaluation
 
-| Model | Dataset Size | MATH_500 | AIME_2024 | AIME_2025 | GPQA_Diamond |
-|---|---|---|---|---|---|
-| s1-32B | 1k | 92.6 | 50.0 | 26.7 | 56.6 |
-| s1.1-32B | 1k | 89.0 | 64.7 | 49.3 | 60.1 |
-| LIMO | 0.8k | <u>94.8</u> | 57.1 | 49.3 | <u>66.7</u> |
-| OpenThinker-32B | 114k | 90.6 | <u>66.0</u> | <u>53.3</u> | 61.6 |
-| DeepSeek-R1-Distill-Qwen-32B | 800K | 93.0 | **72.6** | **55.9** | 62.1 |
-| Long1-32B | 1K | **95.6** | 50.7 | <u>53.3</u> | **71.1** |
+![img_3.jpg](img_3.jpg)
 
 Performance comparison of different models across multiple reasoning benchmarks (pass@1). The best results for each benchmark are highlighted in bold, with the second-best underlined. The data for s1 does not use budget forcing, and the data for s1.1 that does not use budget forcing comes from Open Thoughts.
 
