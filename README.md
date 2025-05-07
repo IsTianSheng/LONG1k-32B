@@ -14,7 +14,7 @@ Conventional wisdom suggests difficult problems are crucial for training reasoni
 
 (1) keeping difficulty constant while varying length: To investigate this, we used identical problems with varying solution lengths, divided into four sets based on solution length.
 
-img_new()
+![img_3.png](img_new.png)
 
    (2) keeping length constant while varying difficulty: we design datasets where “easier” problems are made longer by adding multiple sub-questions, whereas  “difficult” problems are inherently complex but contain only a single question. This ensures both sets have similar token lengths in their solution traces but differ in intrinsic difficulty.
 
