@@ -39,7 +39,7 @@ Performance comparison of different models across multiple reasoning benchmarks 
 
 
 # Uses
-The LONG1-32B model file has been uploaded here. If you want to use it, please download it [here](https://huggingface.co/ZTss/LONG1k-32B). We have uploaded our reasoning and evaluation scripts. If you are interested in using it, please follow the steps below.
+The LONG1-32B model file has been uploaded here. If you want to use it, please download it [here]. We have uploaded our reasoning and evaluation scripts. If you are interested in using it, please follow the steps below.
 
   ## Requirement
 ```
@@ -58,9 +58,3 @@ The LONG1-32B model file has been uploaded here. If you want to use it, please d
   python calc_metric_lc.py
 ```
 
-
-
-- **Name**: Danhao Zhu
-  **Email**: zhudanhao@jspi.cn
-  **Organization**: Jiangsu Police Institute
-  
