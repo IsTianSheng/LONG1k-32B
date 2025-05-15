@@ -45,6 +45,8 @@ Performance comparison of different models across multiple reasoning benchmarks 
 # Uses
 The Long1K-32B model file has been uploaded here. If you want to use it, please download it [here]. We have uploaded our reasoning and evaluation scripts. If you are interested in using it, please follow the steps below.
 
+ ## training
+  We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline.
   ## Requirement
 ```
   pip install -r requirements.txt
