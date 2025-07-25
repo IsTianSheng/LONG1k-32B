@@ -14,20 +14,20 @@ Conventional wisdom suggests difficult problems are crucial for training reasoni
 
 (1) keeping difficulty constant while varying length: To investigate this, we used identical problems with varying solution lengths, divided into four sets based on solution length.
 
-![img_3.png](img_new.png)
+![img_3.png](visuals/img_new.png)
 
    (2) keeping length constant while varying difficulty: we design datasets where “easier” problems are made longer by adding multiple sub-questions, whereas  “difficult” problems are inherently complex but contain only a single question. This ensures both sets have similar token lengths in their solution traces but differ in intrinsic difficulty.
 
-![img_3.png](img_2.png)
+![img_3.png](visuals/img_2.png)
 
 
   Therefore, we shifted our focus from the difficulty of mathematical problems to the length of mathematical problems. We made the assumption that length is the key factor in constructing inference models. To this end, we explored the effect of different tokens lengths on the reasoning ability of the model at the same difficulty level. Firstly, we classify the token length into 6 levels, whose lengths are 1k,1.5k,2k,3k,6k,12k. Then, we set the number of questions to 500, and conduct experimental validation on Qwen2.5-32B model. The results are shown below. The data show that on the math500 dataset, the performance is close to linearly increasing as the length increases.
 
-![img_3.png](img_1.png)
+![img_3.png](visuals/img_1.png)
 
   In addition, we compared the reasoning processes of two models trained with reasoning lengths of 1.5k and 12k, respectively, on the MATH500 test set, including both successful and failed reasoning attempts. Our analysis included statistical comparisons of the average reasoning token length and the top 10 most frequently used words during reasoning. The goal was to understand why the model trained with a reasoning length of 12k achieved an accuracy improvement of over 5%.
 
-![img_33.png](img_33.png)
+![img_33.png](visuals/img_33.png)
 
 
 
@@ -37,7 +37,7 @@ Conventional wisdom suggests difficult problems are crucial for training reasoni
 
 # Evaluation
 
-![img_3.jpg](img_3.jpg)
+![img_3.jpg](visuals/img_3.jpg)
 
 Performance comparison of different models across multiple reasoning benchmarks (pass@1). The best results for each benchmark are highlighted in bold, with the second-best underlined. The data for s1 does not use budget forcing, and the data for s1.1 that does not use budget forcing comes from Open Thoughts.
 
