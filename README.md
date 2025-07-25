@@ -52,8 +52,8 @@ You can import the required packages for the project using the following command
   pip install -r requirements.txt
 ```
 
- ## training
-We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_st11_32k_1k. The training code uses the LLaMA Factory framework framework. The program will end in about 11 hours. Please refer to train/sft.sh for specific training parameters. 
+ ## Training
+We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_s11_32k_1k or other name. The training code uses the LLaMA Factory framework framework. The program will end in about 11 hours. Please refer to `train/sft.sh` for specific training parameters. 
 ```
 export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 export TORCH_USE_CUDA_DSA=True
@@ -83,7 +83,7 @@ torchrun --nproc-per-node 8 --master_port 12345 train/sft.py \
     --save_steps 62 \
     --gradient_checkpointing > ./log/$data_set.log 2>&1 &
 ```
-Among them, the output_path and data_set parameters need to be modified accordingly. It should be noted that we configure it to run on an 8 GPU with ds_z3_offload_comfig. Run the following command in the data folder:
+Among them, the *output_path* and *data_set* parameters need to be modified accordingly. It should be noted that we configure it to run on an 8 GPU with *deepspeed = ds_z3_offload_comfig*. Run the following command in the data folder:
 ```
   cd ./train
   bash sft.sh
@@ -92,7 +92,7 @@ Among them, the output_path and data_set parameters need to be modified accordin
 
 
   ## Reasoning
-  After downloading the model, please use the following code to perform result inference. Among them, the train_data parameter needs to be modified to the name of the corresponding data. In addition, data_math, export_math, log_math, and model_math all need to be modified as needed.
+  After downloading the model, please use the following code to perform result inference. Among `train/predict.sh`, the train_data parameter needs to be modified to the name of the corresponding data. In addition, *data_math, export_math, log_math*, and *model_math* all need to be modified as needed.
   
 ```
 export VLLM_ALLOW_LONG_MAX_MODEL_LEN=1
@@ -103,7 +103,7 @@ for test_data in gpqa_diamond
 do
 template=deepseek-qwen
 
-train_data=open_s11_32k_2k
+train_data=open_s11_32k_1k
 data_path=./data/${test_data}.json
 
 output_path=./output/$test_data/$model_name-$train_data-$seed
@@ -137,7 +137,7 @@ done
 
 
   ## Evaluation
-  Use the following code to calculate indicators. Among them, the model_math and output_path parameters need to be modified accordingly.
+  Use the following code to calculate indicators. Among them, the *model_math* and *output_path* parameters need to be modified accordingly.
 ```
   cd ./eval
   python calc_metric_lc.py
