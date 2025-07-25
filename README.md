@@ -46,10 +46,11 @@ Performance comparison of different models across multiple reasoning benchmarks 
 The Long1K-32B model file has been uploaded here. If you want to use it, please download it [here]. We have uploaded our reasoning and evaluation scripts. If you are interested in using it, please follow the steps below.
 
  ## training
-    We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_st11_32k_1k. The training code uses the LLaMA Factory framework framework. It should be noted that we configure it to run on an 8 GPU with ds_z3_offload_comfig. The program will end in about 11 hours. Please refer to train/sft.sh for specific training parameters. Run the following command in the data folder:
-
+We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_st11_32k_1k. The training code uses the LLaMA Factory framework framework. It should be noted that we configure it to run on an 8 GPU with ds_z3_offload_comfig. The program will end in about 11 hours. Please refer to train/sft.sh for specific training parameters. Run the following command in the data folder:
+```
   bash sft.sh
 ```
+
   ## Requirement
 ```
   pip install -r requirements.txt
