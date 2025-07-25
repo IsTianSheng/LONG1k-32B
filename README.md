@@ -45,25 +45,100 @@ Performance comparison of different models across multiple reasoning benchmarks 
 # Uses
 The Long1K-32B model file has been uploaded here. If you want to use it, please download it [here]. We have uploaded our reasoning and evaluation scripts. If you are interested in using it, please follow the steps below.
 
- ## training
-We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_st11_32k_1k. The training code uses the LLaMA Factory framework framework. It should be noted that we configure it to run on an 8 GPU with ds_z3_offload_comfig. The program will end in about 11 hours. Please refer to train/sft.sh for specific training parameters. Run the following command in the data folder:
-```
-  bash sft.sh
-```
 
   ## Requirement
+You can import the required packages for the project using the following command.
 ```
   pip install -r requirements.txt
 ```
-  ## Reasoning
-  After downloading the model, please use the following code to perform result inference.
+
+ ## training
+We employ the LLaMA-Factory framework for model training, benefiting from its efficient and user-friendly pipeline. Before training the code, you need to merge the json in LONG1k into one file and name it open_st11_32k_1k. The training code uses the LLaMA Factory framework framework. The program will end in about 11 hours. Please refer to train/sft.sh for specific training parameters. 
 ```
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
+export TORCH_USE_CUDA_DSA=True
+model_name=Qwen2.5-32B-Instruct
+data_set=open_s11_32k_1k
+output_path=/model_output/letz/sft/full/$data_set/$model_name
+echo ./log/$data_set.log
+mkdir -p $output_path
+torchrun --nproc-per-node 8 --master_port 12345 train/sft.py \
+    --block_size 32768 \
+    --per_device_train_batch_size 1 \
+    --per_device_eval_batch_size 1 \
+    --gradient_accumulation_steps 2 \
+    --num_train_epochs 4 \
+    --train_file_path ./data/$data_set \
+    --model_name /gemini/data-1/$model_name \
+    --warmup_ratio 0.05 \
+    --deepspeed ../examples/deepspeed/ds_z3_offload_config.json \
+    --bf16 \
+    --logging_steps 5 \
+    --lr_scheduler_type cosine \
+    --learning_rate 2e-5 \
+    --weight_decay 1e-4 \
+    --adam_beta1 0.9 \
+    --adam_beta2 0.95 \
+    --output_dir $output_path \
+    --save_steps 62 \
+    --gradient_checkpointing > ./log/$data_set.log 2>&1 &
+```
+Among them, the output_path and data_set parameters need to be modified accordingly. It should be noted that we configure it to run on an 8 GPU with ds_z3_offload_comfig. Run the following command in the data folder:
+```
+  cd ./train
+  bash sft.sh
+```
+
+
+
+  ## Reasoning
+  After downloading the model, please use the following code to perform result inference. Among them, the train_data parameter needs to be modified to the name of the corresponding data. In addition, data_math, export_math, log_math, and model_math all need to be modified as needed.
+  
+```
+export VLLM_ALLOW_LONG_MAX_MODEL_LEN=1
+model_name=Qwen2.5-32B-Instruct
+for seed in 42
+do
+for test_data in gpqa_diamond
+do
+template=deepseek-qwen
+
+train_data=open_s11_32k_2k
+data_path=./data/${test_data}.json
+
+output_path=./output/$test_data/$model_name-$train_data-$seed
+log_path=log/$test_data
+mkdir -p $log_path
+model_path=/model_output/letz/sft/full/$train_data/$model_name
+
+echo $log_path/$model_name-$train_data-$seed.log
+
+export PYTHONPATH=$PYTHONPATH:$model_path
+python predict.py \
+    --model_path $model_path \
+    --max_tokens 35768 \
+    --template $template \
+    --data_path $data_path \
+    --output_path $output_path \
+    --gpu_memory_utilization 0.95 \
+    --gpu_num 2 \
+    --seed $seed \
+    --max_len 40960 > $log_path/$model_name-$train_data-$seed.log 2>&1 &
+wait
+done
+wait
+done
+```
+  You can use the trained model to generate prediction results through the following command.
+```
+  cd ./eval
   bash predict.sh
 ```
 
 
   ## Evaluation
-  Use the following code to calculate indicators.
+  Use the following code to calculate indicators. Among them, the model_math and output_path parameters need to be modified accordingly.
 ```
+  cd ./eval
   python calc_metric_lc.py
 ```
